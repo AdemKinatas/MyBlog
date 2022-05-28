@@ -14,6 +14,7 @@ namespace MyBlog.Entities.Dtos.ArticleDtos
         public string Title { get; set; }
         public string Content { get; set; }
         public string Thumbnail { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.mm.yyyy}")]
         public DateTime Date { get; set; }
         public string SeoAuthor { get; set; }

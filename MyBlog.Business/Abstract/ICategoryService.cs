@@ -10,8 +10,8 @@ namespace MyBlog.Business.Abstract
         Task<IDataResult<CategoryListDto>> GetAllAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNotDeletedAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNotDeletedAndActiveAsync();
-        Task<IResult> AddAsync(CategoryAddDto categoryAddDto, string createdByName);
-        Task<IResult> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
+        Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName);
+        Task<IDataResult<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
         Task<IResult> DeleteAsync(int categoryId, string modifiedByName);
         Task<IResult> HardDeleteAsync(int categoryId);
     }

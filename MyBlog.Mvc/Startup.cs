@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyBlog.Business.AutoMapper.Profiles;
 using MyBlog.Business.Extensions;
+using System.Text.Json.Serialization;
 
 namespace MyBlog.Mvc
 {
@@ -14,7 +15,7 @@ namespace MyBlog.Mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation().AddFluentValidation();
-            services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile));
+            services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile));
             services.LoadMyservices();
         }
 

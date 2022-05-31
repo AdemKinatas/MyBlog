@@ -25,7 +25,7 @@ namespace MyBlog.Mvc.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _categoryService.GetAllAsync();
+            var result = await _categoryService.GetAllByNotDeletedAsync();
             return View(result.Data);
         }
 
@@ -64,7 +64,7 @@ namespace MyBlog.Mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> GetAllCategories()
         {
-            var result = await _categoryService.GetAllAsync();
+            var result = await _categoryService.GetAllByNotDeletedAsync();
 
             var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
             {
@@ -78,9 +78,8 @@ namespace MyBlog.Mvc.Areas.Admin.Controllers
         public async Task<JsonResult> Delete(int categoryId)
         {
             var result = await _categoryService.DeleteAsync(categoryId, "Adem Kınataş");
-
-            var ajaxResult = JsonSerializer.Serialize(result);
-            return Json(ajaxResult);
+            var deletedCategory = JsonSerializer.Serialize(result.Data);
+            return Json(deletedCategory);
         }
     }
 }

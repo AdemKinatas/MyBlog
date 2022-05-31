@@ -134,6 +134,10 @@
                                 <td>${category.CreatedByName}</td>
                                 <td>${convertToShortDate(category.ModifiedDate)}</td>
                                 <td>${category.ModifiedByName}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm"><span class="fas fa-edit"></span> Düzenle</button>
+                                    <button class="btn btn-danger btn-sm btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span> Sil</button>
+                                </td>
                             </tr>`
                                         });
 
@@ -146,7 +150,9 @@
                                     }
                                 },
                                 error: function (error) {
-                                    toastr.error(`${error.statusText}`, "İşlem Başarısız!");
+                                    $('.spinner-border').hide();
+                                    $('#categoriesTable').fadeIn(1000);
+                                    toastr.error(`${error.responseText}`, "Hata!");
                                 }
                             });
                         }
@@ -457,51 +463,54 @@
                 /*Ajax POST / Posting the FormData as CategoryAddDto ends from here*/
 
                  /*Ajax POST / Deleting a Category starts from here*/
-                        $(document).on('click', '.btn-delete', function (e) {
-                            e.preventDefault();
-                            const id = $(this).attr('data-id');
-                            Swal.fire({
-                                title: 'Silmek istediğinize emin misiniz?',
-                                text: "Seçili kategori silinecektir!",
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Evet, silmek istiyorum.',
-                                cancelButtonText: 'Hayır,silmek istemiyorum.'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        dataType: 'json',
-                                        data: { categoryId: id },
-                                        url: '@Url.Action("Delete","Category")',
-                                        success: function (data) {
-                                            const result = jQuery.parseJSON(data);
-                                            if (result.ResultStatus === 0) {
-                                                Swal.fire(
-                                                    'Silindi!',
-                                                    'Seçtiğiniz kategori başarıyla silindi.',
-                                                    'success'
-                                                );
-                                                const tableRow = $(`[name="${id}"]`)
-                                                tableRow.fadeOut(3500)
-                                            }
-                                            else {
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Oops...',
-                                                    text: 'Something went wrong!',              
-                                                })
-                                            }
-                                        },
-                                        Error: function (error) {
-                                            console.log(error)
-                                        }
-                                    });
+                $(document).on('click', '.btn-delete', function (e) {
+                    e.preventDefault();
+                    const id = $(this).attr('data-id');
+                    const tableRow = $(`[name="${id}"]`)
+                    const categoryName = tableRow.find('td:eq(1)').text();
+                    Swal.fire({
+                        title: `${categoryName} adlı kategoriyi silmek istediğinize emin misiniz?`,
+                        text: `${categoryName} adlı kategori silinecektir!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Evet, silmek istiyorum.',
+                        cancelButtonText: 'Hayır,silmek istemiyorum.'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: 'POST',
+                                dataType: 'json',
+                                data: { categoryId: id },
+                                url: '@Url.Action("Delete","Category")',
+                                success: function (data) {
+                                    const categoryDto = jQuery.parseJSON(data);
+                                    if (categoryDto.ResultStatus === 0) {
+                                        Swal.fire(
+                                            'Silindi!',
+                                            `${categoryDto.Category.Name} adlı kategori başarıyla silinmiştir.`,
+                                            'success'
+                                        );
+                                        
+                                        tableRow.fadeOut(3500)
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Başarısız İşlem!',
+                                            text: `${result.Message}`,
+                                        })
+                                    }
+                                },
+                                Error: function (error) {
+                                    console.log(error);
+                                    toastr.error(`${error.responseText}`,"Hata!")
                                 }
                             });
-                        });
+                        }
+                    });
+                });
             });
         });
     </script>

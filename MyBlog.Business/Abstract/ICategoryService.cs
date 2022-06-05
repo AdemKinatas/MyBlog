@@ -7,6 +7,7 @@ namespace MyBlog.Business.Abstract
     public interface ICategoryService
     {
         Task<IDataResult<CategoryDto>> GetAsync(int categoryId);
+        Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId);
         Task<IDataResult<CategoryListDto>> GetAllAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNotDeletedAsync();
         Task<IDataResult<CategoryListDto>> GetAllByNotDeletedAndActiveAsync();

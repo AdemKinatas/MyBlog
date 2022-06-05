@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyBlog.DataAccess.Concrete.EfCore.Configurations;
 using MyBlog.DataAccess.Concrete.EfCore.SeedData;
 using MyBlog.Entities.Concrete;
@@ -11,13 +12,11 @@ using System.Threading.Tasks;
 
 namespace MyBlog.DataAccess.Concrete.EfCore.Contexts
 {
-    public class MyBlogContext : DbContext
+    public class MyBlogContext : IdentityDbContext<User,Role,int,UserClaim,UserRole,UserLogin,RoleClaim,UserToken>
     {
         public DbSet<Article>  Articles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Role { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

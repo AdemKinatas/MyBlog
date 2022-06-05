@@ -159,7 +159,8 @@ namespace MyBlog.Business.Concrete
 
         public async Task<IDataResult<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
         {
-            var category = _mapper.Map<Category>(categoryUpdateDto);
+            var oldCategory = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryUpdateDto.Id);
+            var category = _mapper.Map<CategoryUpdateDto,Category>(categoryUpdateDto,oldCategory);
             category.ModifiedByName = modifiedByName;
 
             var updatedCategory = await _unitOfWork.Categories.UpdateAsync(category);
@@ -171,6 +172,21 @@ namespace MyBlog.Business.Concrete
                 ResultStatus = ResultStatus.Success,
                 Message = $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir."
             });
+        }
+
+        public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId)
+        {
+            var result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
+            if (result)
+            {
+                var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
+                var categoryUpdateDto = _mapper.Map<CategoryUpdateDto>(category);
+                return new DataResult<CategoryUpdateDto>(ResultStatus.Success, categoryUpdateDto);
+            }
+            else
+            {
+                return new DataResult<CategoryUpdateDto>(ResultStatus.Error, "Böyle bir kategori bulunamadı.", null);
+            }
         }
     }
 }

@@ -11,8 +11,6 @@ namespace MyBlog.DataAccess.Abstract
         IArticleDal Articles { get; } //example using : _unitOfWork.Articles.AddAsync();
         ICategoryDal Categories { get; }
         ICommentDal Comments { get; }
-        IRoleDal Roles { get; }
-        IUserDal Users { get; }
         Task<int> SaveAsync();
     }
 }

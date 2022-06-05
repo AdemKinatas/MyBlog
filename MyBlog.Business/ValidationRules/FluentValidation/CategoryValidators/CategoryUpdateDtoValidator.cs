@@ -24,10 +24,6 @@ namespace MyBlog.Business.ValidationRules.FluentValidation.CategoryValidators
 
             RuleFor(x => x.Note).MaximumLength(500).WithMessage("Kategori Özel Not Alanı " + ValidationMessages.MustLessThen500);
             RuleFor(x => x.Note).MinimumLength(3).WithMessage("Kategori Özel Not Alanı " + ValidationMessages.MustMoreThen3);
-
-            RuleFor(x => x.IsActive).NotEmpty().WithMessage("Aktif mi? " + ValidationMessages.NotEmpty);
-
-            RuleFor(x => x.IsDeleted).NotEmpty().WithMessage("Silindi mi? " + ValidationMessages.NotEmpty); 
         }
     }
 }

@@ -15,8 +15,6 @@ namespace MyBlog.DataAccess.Concrete
         private EfArticleDal _efArticleDal;
         private EfCategoryDal _efCategoryDal;
         private EfCommentDal _efCommentDal;
-        private EfRoleDal _efRoleDal;
-        private EfUserDal _efUserDal;
 
         public UnitOfWork(MyBlogContext context)
         {
@@ -33,10 +31,6 @@ namespace MyBlog.DataAccess.Concrete
         public ICategoryDal Categories => _efCategoryDal ?? new EfCategoryDal(_context);
 
         public ICommentDal Comments => _efCommentDal ?? new EfCommentDal(_context);
-
-        public IRoleDal Roles => _efRoleDal ?? new EfRoleDal(_context);
-
-        public IUserDal Users => _efUserDal ?? new EfUserDal(_context);
 
         public async Task<int> SaveAsync()
         {

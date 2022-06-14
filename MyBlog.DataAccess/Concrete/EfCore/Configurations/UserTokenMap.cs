@@ -4,7 +4,7 @@ using MyBlog.Entities.Concrete;
 
 namespace MyBlog.DataAccess.Concrete.EfCore.Configurations
 {
-    public class UserTokenConfiguration : IEntityTypeConfiguration<UserToken>
+    public class UserTokenMap : IEntityTypeConfiguration<UserToken>
     {
         public void Configure(EntityTypeBuilder<UserToken> builder)
         {

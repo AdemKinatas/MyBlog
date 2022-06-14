@@ -2,7 +2,7 @@
 
     /* DataTables start here. */
 
-    $('#categoriesTable').DataTable({
+    $('#usersTable').DataTable({
         dom:
             "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -13,13 +13,13 @@
                 attr: {
                     id: "btnAdd",
                 },
-                className: 'btn btn-success btn-sm',
+                className: 'btn btn-success',
                 action: function (e, dt, node, config) {
                 }
             },
             {
                 text: 'Yenile',
-                className: 'btn btn-warning btn-sm',
+                className: 'btn btn-warning',
                 action: function (e, dt, node, config) {
                     $.ajax({
                         type: 'GET',
@@ -106,10 +106,10 @@
 
     /* DataTables end here */
 
-    /* Ajax GET / Getting the _CategoryAddPartial as Modal Form starts from here. */
+    /* Ajax GET / Getting the _UserAddPartial as Modal Form starts from here. */
 
     $(function () {
-        const url = '/Admin/Category/Add/';
+        const url = '/Admin/User/Add/';
         const placeHolderDiv = $('#modalPlaceHolder');
         $('#btnAdd').click(function () {
             $.get(url).done(function (data) {
@@ -118,7 +118,7 @@
             });
         });
 
-        /* Ajax GET / Getting the _CategoryAddPartial as Modal Form ends here. */
+        /* Ajax GET / Getting the _UserAddPartial as Modal Form ends here. */
 
         /* Ajax POST / Posting the FormData as CategoryAddDto starts from here. */
 
@@ -130,9 +130,9 @@
                 const actionUrl = form.attr('action');
                 const dataToSend = form.serialize();
                 $.post(actionUrl, dataToSend).done(function (data) {
-
+                    console.log(data);
                     const categoryAddAjaxModel = jQuery.parseJSON(data);
-
+                    console.log(categoryAddAjaxModel);
                     const newFormBody = $('.modal-body', categoryAddAjaxModel.CategoryAddPartial);
                     placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
                     const isValid = newFormBody.find('[name="IsValid"]').val() === 'True';

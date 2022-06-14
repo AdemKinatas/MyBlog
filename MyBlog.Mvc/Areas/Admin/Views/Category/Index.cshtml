@@ -1,7 +1,7 @@
 ﻿@model CategoryListDto
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Kategoriler Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -75,6 +75,7 @@
         </div>
     </div>
 }
+
 @if (Model.ResultStatus == ResultStatus.Error)
 {
     <div class="alert alert-danger mt-3">

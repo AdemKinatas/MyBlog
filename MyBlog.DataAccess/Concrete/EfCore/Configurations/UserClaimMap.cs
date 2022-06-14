@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyBlog.DataAccess.Concrete.EfCore.Configurations
 {
-    public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
+    public class UserClaimMap : IEntityTypeConfiguration<UserClaim>
     {
         public void Configure(EntityTypeBuilder<UserClaim> builder)
         {

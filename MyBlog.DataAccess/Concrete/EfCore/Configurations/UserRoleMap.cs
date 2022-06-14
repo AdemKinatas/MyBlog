@@ -4,7 +4,7 @@ using MyBlog.Entities.Concrete;
 
 namespace MyBlog.DataAccess.Concrete.EfCore.Configurations
 {
-    public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
+    public class UserRoleMap : IEntityTypeConfiguration<UserRole>
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {

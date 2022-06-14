@@ -4,7 +4,7 @@ using MyBlog.Entities.Concrete;
 
 namespace MyBlog.DataAccess.Concrete.EfCore.Configurations
 {
-    public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
+    public class RoleClaimMap : IEntityTypeConfiguration<RoleClaim>
     {
         public void Configure(EntityTypeBuilder<RoleClaim> builder)
         {

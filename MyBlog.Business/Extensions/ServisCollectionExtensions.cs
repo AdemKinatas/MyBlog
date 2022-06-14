@@ -23,11 +23,23 @@ namespace MyBlog.Business.Extensions
         public static IServiceCollection LoadMyservices(this IServiceCollection services)
         {
             services.AddDbContext<MyBlogContext>();
-            services.AddIdentity<User, Role>().AddEntityFrameworkStores<MyBlogContext>();
+            services.AddIdentity<User, Role>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequiredUniqueChars = 0;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 2;
+                
+                opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                opt.User.RequireUniqueEmail = true;
+                
+            }).AddEntityFrameworkStores<MyBlogContext>();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IArticleService, ArticleManager>();
-
 
             services.AddTransient<IValidator<ArticleAddDto>, ArticleAddDtoValidator>();
             services.AddTransient<IValidator<ArticleUpdateDto>, ArticleUpdateDtoValidator>();
